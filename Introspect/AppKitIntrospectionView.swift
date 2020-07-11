@@ -24,7 +24,7 @@ public class IntrospectionNSView: NSView {
 /// Introspection View that is injected into the UIKit hierarchy alongside the target view.
 /// After `updateNSView` is called, it calls `selector` to find the target view, then `customize` when the target view is found.
 @available(macOS 15.0, *)
-public struct AppKitIntrospectionView<TargetViewType: NSView>: NSViewRepresentable {
+public struct AppKitIntrospectionView<TargetViewType>: NSViewRepresentable {
     
     /// Method that introspects the view hierarchy to find the target view.
     /// First argument is the introspection view itself, which is contained in a view host alongside the target view.

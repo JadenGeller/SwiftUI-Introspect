@@ -121,7 +121,7 @@ extension View {
 extension View {
     
     /// Finds a `TargetView` from a `SwiftUI.View`
-    public func introspect<TargetView: NSView>(
+    public func introspect<TargetView>(
         selector: @escaping (IntrospectionNSView) -> TargetView?,
         customize: @escaping (TargetView) -> ()
     ) -> some View {
@@ -164,6 +164,10 @@ extension View {
     /// Finds a `NSSegmentedControl` from a `SwiftUI.Picker` with style `SegmentedPickerStyle`
     public func introspectSegmentedControl(customize: @escaping (NSSegmentedControl) -> ()) -> some View {
         return introspect(selector: TargetViewSelector.sibling, customize: customize)
+    }
+    
+    public func introspectWindow(customize: @escaping (NSWindow) -> ()) -> some View {
+        return introspect(selector: { $0.window }, customize: customize)
     }
 }
 #endif

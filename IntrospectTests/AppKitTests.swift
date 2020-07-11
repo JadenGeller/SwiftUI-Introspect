@@ -132,6 +132,18 @@ private struct SegmentedControlTestView: View {
 }
 
 @available(macOS 15.0, *)
+private struct WindowTestView: View {
+    let spy: () -> Void
+
+    var body: some View {
+        EmptyView()
+        .introspectWindow { window in
+            self.spy()
+        }
+    }
+}
+
+@available(macOS 15.0, *)
 class AppKitTests: XCTestCase {
     
     func testList() {
@@ -202,6 +214,16 @@ class AppKitTests: XCTestCase {
         
         let expectation = XCTestExpectation()
         let view = SegmentedControlTestView(spy: {
+            expectation.fulfill()
+        })
+        TestUtils.present(view: view)
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testWindow() {
+        
+        let expectation = XCTestExpectation()
+        let view = WindowTestView(spy: {
             expectation.fulfill()
         })
         TestUtils.present(view: view)
